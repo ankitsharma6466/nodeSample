@@ -12,24 +12,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-apiRouterBinding(app);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handler
-// no stacktraces leaked to user unless in development environment
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({
-    msg: err.message
-  });
-});
-
 /**
  * Middelware to intercept requests and allow headers
  * basically for enabling CORS
@@ -48,6 +30,26 @@ app.use(function (req, res, next) {
   
   next();
 });
+
+apiRouterBinding(app);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handler
+// no stacktraces leaked to user unless in development environment
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({
+    msg: err.message
+  });
+});
+
+
 
 module.exports = app;
 
